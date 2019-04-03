@@ -1,0 +1,428 @@
+---
+title: "Tutorial Básico Sobre Vetores no R"
+author: "Prof.DaviRocha"
+date: "27 de novembro de 2018"
+output: html_document
+---
+
+![](vector.png)
+
+####Introdução
+
+Vetores são umas das estruturas mais usadas no R. Todo tipo de cálculo no fim acaba sendo feito no nível dos vetores. Portanto entender essa estrutura é fundamental para quem está começando no R.
+
+#### O que são vetores no R
+
+Vetores são matrizes unidimensionais que podem conter números inteiros, números reais(ponto flutuante com dupla precisão), complexos,  caracteres(strings) ou valores lógicos.
+
+####Criando vetores
+
+#####Vetor de um único elemento
+
+```{r}
+##caracter##
+print('vetor')
+
+# dupla precisão
+print(12.5)
+
+# inteiro
+print(63L)
+
+# logico
+print(TRUE)
+
+# complexo.
+print(2+3i)
+
+
+
+
+```
+
+#####Vetores de múltiplos elementos
+
+#####Usando o operador de dois pontos com dados numéricos
+
+```{r}
+##vetor de 10 a 20
+i <-10:20
+i
+v<- 1.6:5.6
+v
+```
+
+#####Usando o operador seq com dados numéricos
+
+A vantagem do operador *seq* é que você pode definir o passo da sequência
+
+```{r}
+##vetor de 2 a 20 com passo 2
+ a <- seq(2,20,2)  # numeros pares até 20
+a
+u<- seq(1,20,2)  # numeros impares ate 20
+u
+```
+
+#####Usando a função de combinação *c()*:
+
+
+```{r}
+###vetor com elemntos numericos
+nvec <- c(1,2,3,4,5)
+class(nvec)
+print(nvec)
+
+
+# Vetor de caracteres ou strings
+cvec <- c('B','R','A')
+class(cvec)
+print(cvec)
+
+# vetor lógico
+lvec <- c(TRUE,FALSE)
+class(lvec)
+print(lvec)
+
+
+```
+
+Observe que não podemos misturar tipos de dados diferentes em cada entrada do vetor pois o R irá  forçar todos os elementos a ser do mesmo tipo. No R para misturar dados de diferentes tipos pode ser usado as listas que não vamos tratar nesse artigo.
+
+Como exemplo do que falamos acima veja:
+
+```{r}
+
+v <- c(TRUE,5)
+class(v)  ## transformou em numérico
+print(v) 
+
+u <- c('a', 22)
+class(u)     ## transformou em caracter
+print(u)
+
+```
+
+####Nomeando Vetores
+
+Podemos usar a função *names()* para atribuir nomes a cada elemento em nosso vetor. Por exemplo, imagine o seguinte vetor de alturas:
+
+```{r}
+alt <- c(72,71,68,73,69,75)
+
+```
+
+
+Temos 6 alturas de 6 pessoas diferentes. Suponha que os nomes de cada um seja: Carlos, Ricardo, Sofia, Flávio, Amanda, Rodrigo.
+A função *names()* pode ser usada assim:
+
+```{r}
+
+names(alt)<- c('Carlos', 'Ricardo', 'Sofia', 'Flávio', 'Amanda', 'Rodrigo')
+
+```
+
+
+Note o que acontece com o vetor alt:
+
+```{r}
+
+alt
+
+```
+
+
+####Acessando elementos de vetores
+
+Você pode usar a notação de colchetes para indexar e acessar elementos individuais de um vetor:
+
+Sejam os vetores v e u:
+
+```{r}
+v <- c(100,200,300)
+u <- c('a','b','c')
+
+print(v)
+print(u)
+
+```
+
+A indexação funciona usando colchetes e passando a posição do índice do elemento como um número. Lembre-se de que o índice começa em 1 (em algumas outras linguagens de programação como o Python por exemplo, a indexação começa em 0).
+
+
+```{r}
+# acessando o segundo elemento
+v[2]
+
+```
+
+
+```{r}
+# acessando o terceiro elemento
+u[3]
+
+
+```
+
+##### Acessando múltiplos valores
+
+Podemos pegar vários itens de um vetor passando um vetor de posições de índice dentro dos colchetes. Por exemplo:
+
+
+```{r}
+# acessando o  primeiro e segundo elemento do vetor v
+v[c(1,2)]
+
+
+```
+
+
+```{r}
+# acessando o  terceiro e primeiro elemento do vetor v
+v[c(3,1)]
+
+
+```
+
+
+
+
+```{r}
+# acessando o  segund e terceiro elemento do vetor u
+u[c(2,3)]
+
+
+```
+
+
+
+#####Fatiamento
+Você pode usar dois pontos (:) para indicar uma "fatia de um vetor. O formato é:
+
+*vetor [start_index: stop_index]* e você terá aquela "fatia" do vetor retornada para você. Por exemplo:
+
+
+```{r}
+p <- c(1,2,3,4,5,6,7,8,9,10)
+
+```
+
+
+```{r}
+p[4:8]
+
+```
+
+
+```{r}
+p[2:6]
+
+```
+
+Observe como o elemento de índice inicial e o índice de parada estão incluídos no resultado do fatiamento!
+
+#####Indexando pelo nome
+
+Vimos anteriormente que podemos associar nomes a vetores:
+
+
+```{r}
+
+v <- c(13,24,35,46)
+names(v) <- c('a','b','c','d')
+
+```
+
+Podemos usar esses nomes junto com os colchetes de indexação para pegar elementos individuais do vetor:
+
+```{r}
+
+v['c']
+
+```
+
+
+
+Ou passe um vetor de nomes que queremos pegar ou visualizar:
+
+
+```{r}
+#podemos selecionar fora de ordem:
+v[c('d','c')]
+
+```
+
+
+####Operadores de Comparação e Seleção
+
+Podemos usar operadores de comparação para filtrar elementos de um vetor
+
+
+Seja o vetor v que usamos acima:
+
+
+```{r}
+
+v
+
+```
+
+
+Veja o que acontece se  quisermos encontrar os valores v que são maiores que 30 usando o operador maior que **(>)**:
+
+```{r}
+
+v>30
+
+```
+
+Observe que o retorno foi um vetor lógico onde retornou TRUE se a condição for verdadeira e FALSE se a condição for falsa.
+
+Se quisermos filtrar os valores de v que são maiores que 30 podemos usar a notação de colchetes da seguinte forma:
+
+```{r}
+
+v[v>30]
+
+```
+
+Podemos associar os valores logicos a uma variavel  e usá-la  como filtro na notação de colchetes:
+
+
+```{r}
+
+filtro <- v>30
+filtro
+```
+
+
+
+```{r}
+
+v[filtro]
+
+```
+
+
+
+####Calculo com vetores
+
+
+
+Podemos realizar várias operações aritméticas com vetores e elas são feitas a cada elemento
+Sejam v e u:
+
+
+```{r}
+
+u <- c(11,12,13)
+v <- c( 14,15,16)
+
+
+```
+
+
+######Soma de vetores
+
+```{r}
+
+u+v
+
+```
+
+
+#####Subtração de vetores
+
+
+
+```{r}
+
+u-v
+
+
+```
+
+
+#####Multiplicação de vetores
+
+```{r}
+
+v*u
+
+```
+
+
+
+#####Divisão de vetores
+
+```{r}
+
+u/v
+
+```
+
+
+
+####Funções com vetores
+
+Vamos aprender sobre algumas funções úteis que podemos usar com vetores. Uma função tem o formato:
+
+**nome_da_funcao(entrada)**
+
+Por exemplo, se você quiser somar todos os elementos em um vetor numérico, use a função sum (). vejamos:
+
+
+```{r}
+
+sum(v)
+
+```
+
+
+
+
+Produto de elementos:
+
+
+```{r}
+
+prod(u)
+
+```
+
+
+Máximo e Mínimo
+
+```{r}
+
+max(v)
+min(u)
+
+```
+
+
+Variancia
+
+```{r}
+
+var(u)
+
+```
+
+
+Desvio Padrão
+
+```{r}
+
+sd(v)
+
+```
+
+
+
+É claro que existem outras funções no R. Você descobrirá mais conforme aparecer a necessidade, inclusive pode criar suas próprias funções para resolver o seu problema específico!
+
+Espero que tenha ajudado a entender melhor vetores no R.
+ Até o próximo!
+
+**Keep calm and analysing data!**
